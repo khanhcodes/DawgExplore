@@ -7,6 +7,5 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
-  },
-  "python.defaultInterpreterPath": "./back-end/virtual/bin/python3"
+  }
 }

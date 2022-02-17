@@ -1,3 +1,3 @@
-source ./virtual/bin/activate
+source ../virtual/bin/activate
 pip install $@
 yarn export
