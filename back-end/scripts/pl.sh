@@ -1,2 +1,2 @@
-source ../virtual/bin/activate
+. ../virtual/bin/activate
 pip list
