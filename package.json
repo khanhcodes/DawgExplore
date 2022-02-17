@@ -1,0 +1,10 @@
+{
+  "name": "uga-spring-2022",
+  "version": "0.1.0",
+  "repository": "https://github.com/khanhcodes/DawgExplore.git",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "setup": "cd front-end && yarn install && cd ../back-end && yarn setup && cd .."
+  }
+}
