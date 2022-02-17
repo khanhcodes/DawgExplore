@@ -6,8 +6,14 @@
   "private": true,
   "scripts": {
     "dev": "pipenv run python server.py",
+    "setup": "run-script-os",
+    "setup:macos": "pip install --user pipx && pipx install pipenv && python3 -m pipx ensurepath",
+    "setup:windows": "pip install --user pipx && pipx install pipenv && python -m pipx ensurepath",
     "pi": "pipenv install",
     "pui": "pipenv uninstall",
     "pl": "pipenv run pip list"
+  },
+  "devDependencies": {
+    "run-script-os": "^1.1.6"
   }
 }
