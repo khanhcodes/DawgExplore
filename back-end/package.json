@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pipenv run python server.py",
     "setup": "run-script-os",
-    "setup:macos": "pip install --user pipx && python3 -m pipx ensurepath pipx install pipenv",
+    "setup:macos": "pip install --user pipx && python3 -m pipx ensurepath && pipx install pipenv",
     "setup:windows": "pip install --user pipx && python -m pipx ensurepath && pipx install pipenv",
     "pi": "pipenv install",
     "pui": "pipenv uninstall",
