@@ -594,6 +594,11 @@ responselike@^1.0.2:
   dependencies:
     lowercase-keys "^1.0.0"
 
+run-script-os@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/run-script-os/-/run-script-os-1.1.6.tgz#8b0177fb1b54c99a670f95c7fdc54f18b9c72347"
+  integrity sha512-ql6P2LzhBTTDfzKts+Qo4H94VUKpxKDFz6QxxwaUZN0mwvi7L3lpOI7BqPCq7lgDh3XLl0dpeXwfcVIitlrYrw==
+
 semver-diff@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/semver-diff/-/semver-diff-3.1.1.tgz#05f77ce59f325e00e2706afd67bb506ddb1ca32b"
