@@ -5,6 +5,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "setup": "cd front-end && yarn install && cd ../back-end && yarn setup && cd .."
+    "setup": "cd front-end && yarn install && cd ../back-end && yarn install && yarn setup && cd .."
   }
 }
