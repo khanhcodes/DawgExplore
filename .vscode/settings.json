@@ -4,5 +4,9 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "python.defaultInterpreterPath": "./back-end/virtual/bin/python3"
 }

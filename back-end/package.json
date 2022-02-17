@@ -1,0 +1,19 @@
+{
+  "name": "back-end",
+  "version": "0.1.0",
+  "main": "server.py",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "source ./virtual/bin/activate && nodemon --exec python3 server.py",
+    "setup": "yarn install && python3 -m venv virtual && source ./virtual/bin/activate && pip install -r requirements.txt",
+    "update": "yarn install && source ./virtual/bin/activate && pip install -r requirements.txt",
+    "pi": "source scripts/pi.sh",
+    "pui": "source scripts/pui.sh",
+    "pl": "source scripts/pl.sh",
+    "export": "rm requirements.txt && pip freeze >> requirements.txt"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
