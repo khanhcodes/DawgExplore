@@ -5,15 +5,28 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "source ./virtual/bin/activate && nodemon --exec python3 server.py",
-    "setup": "yarn install && python3 -m venv virtual && source ./virtual/bin/activate && pip install -r requirements.txt",
-    "update": "yarn install && source ./virtual/bin/activate && pip install -r requirements.txt",
-    "pi": "source scripts/pi.sh",
-    "pui": "source scripts/pui.sh",
-    "pl": "source scripts/pl.sh",
+    "dev": "run-script-os",
+    "dev:macos": "source ./virtual/bin/activate && nodemon --exec python3 server.py",
+    "dev:windows": "bash ./virtual/Scripts/activate && nodemon --exec python3 server.py",
+    "setup": "run-script-os",
+    "setup:macos": "yarn install && python3 -m venv virtual && source ./virtual/bin/activate && pip install -r requirements.txt",
+    "setup:windows": "yarn install && python3 -m venv virtual && bash ./virtual/Scripts/activate && pip install -r requirements.txt",
+    "update": "run-script-os",
+    "update:macos": "yarn install && source ./virtual/bin/activate && pip install -r requirements.txt",
+    "update:windows": "yarn install && bash ./virtual/Scripts/activate && pip install -r requirements.txt",
+    "pi": "run-script-os",
+    "pi:macos": "source scripts/pi.sh",
+    "pi:windows": "bash scripts/pi.sh",
+    "pui": "run-script-os",
+    "pui:macos": "source scripts/pui.sh",
+    "pui:windows": "bash scripts/pui.sh",
+    "pl": "run-script-os",
+    "pl:macos": "source scripts/pl.sh",
+    "pl:windows": "bash scripts/pl.sh",
     "export": "rm requirements.txt && pip freeze >> requirements.txt"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "run-script-os": "^1.1.6"
   }
 }
