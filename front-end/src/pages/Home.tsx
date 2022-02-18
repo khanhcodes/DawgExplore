@@ -25,8 +25,8 @@ class Home extends React.Component<Props> {
 
     return (
       <div className={classes.root}>
-        <h1 className={classes.welcome}>Hello CodeSandbox</h1>
-        <h2>Start editing to see some magic happen!</h2>
+        <h1 className={classes.welcome}>DawgExplore</h1>
+        <h2>Welcome to DawgExplore</h2>
         <h3>Hello Kaitlyn</h3>
       </div>
     );

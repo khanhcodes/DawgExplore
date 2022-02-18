@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import EventCards from "./components/EventCards";
+import Header from "./components/Header";
+import NavigationBar from "./components/NavigationBar";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <NavigationBar />
+    <Header />
+    <EventCards />
   </React.StrictMode>,
   document.getElementById("root")
 );
