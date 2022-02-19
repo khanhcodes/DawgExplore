@@ -41,11 +41,14 @@ const styles = (theme: typeof Theme) => ({
   },
 
   imageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
     width: "100%",
     height: IMAGE_HEIGHT,
 
     overflow: "hidden",
-    backgroundColor: "red",
     borderRadius: "5px"
   },
   image: {
