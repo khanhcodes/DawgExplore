@@ -1,6 +1,6 @@
 export const Theme = {
   height: {
-    navigationBar: 49
+    navigationBar: 74
   },
   zIndex: {
     specific: {
@@ -11,11 +11,25 @@ export const Theme = {
     low: 100
   },
   palette: {
-    main: "#d44747",
+    main: "#E73C3C",
     secondary: "#a82929",
     secondaryHighlight: "#e97a7a"
   },
   typo: {
+    set: {
+      title: {
+        fontFamily: "'Dosis', sans-serif",
+        fontWeight: 700,
+        fontSize: "34px",
+        lineHeight: "42px"
+      },
+      buttonText: {
+        fontFamily: "'Dosis', sans-serif",
+        fontWeight: 400,
+        fontSize: "34px",
+        lineHeight: "42px"
+      }
+    },
     boldness: {
       black: 900,
       bold: 700,

@@ -1,6 +1,5 @@
 import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
-import Card from "../components/Card";
 import NavigationBar from "../components/NavigationBar";
 import { Theme } from "../theme";
 
@@ -12,38 +11,69 @@ const styles = (theme: typeof Theme) => ({
     flexDirection: "column",
 
     position: "relative",
+    width: "100%",
     "@media (min-width: 1080px)": {
       width: "1080px"
     }
   },
-  pushContentDown: {
-    height: theme.height.navigationBar
-  },
+
   content: {
     display: "flex",
     flexDirection: "column",
 
     boxSizing: "border-box",
-    width: "100%",
-    padding: "6rem"
+    width: "100%"
   },
-  banner: {
-    padding: "60px",
-    textAlign: "center",
-    background: theme.palette.main,
-    fontSize: theme.typo.fontSize.xl,
-    color: "white",
 
-    marginBottom: "20px"
+  banner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    height: "280px",
+
+    background: theme.palette.main,
+    borderRadius: "12px"
   },
-  bannerText: {
-    margin: 0
+  searchBar: {
+    width: "80%",
+    height: "73px",
+
+    backgroundColor: "white",
+    borderRadius: "12px"
   },
-  cardsContainer: {
+
+  sectionsContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
+
+    boxSizing: "border-box",
+    width: "100%",
+    padding: "40px 80px",
+
+    "& :first-child": {
+      marginTop: 0
+    }
+  },
+  section: {
+    display: "flex",
+    flexDirection: "column",
+
+    width: "100%",
+
+    marginTop: "40px"
+  },
+  sectionTitle: {
+    ...theme.typo.set.title,
+
+    marginBottom: "12px"
+  },
+  box: {
+    width: "302px",
+    height: "249px",
+
+    borderRadius: "5px",
+    boxShadow: "2px 4px 9px rgba(0, 0, 0, 0.25)"
   }
 });
 
@@ -57,24 +87,21 @@ class Home extends React.Component<Props> {
       <div className={classes.root}>
         <NavigationBar />
 
-        <div className={classes.pushContentDown} />
-
         <div className={classes.content}>
           <div className={classes.banner}>
-            <h1 className={classes.bannerText}>DawgExplore</h1>
-            <p className={classes.bannerText}>Explore events around campus!</p>
+            <div className={classes.searchBar} />
           </div>
 
-          <div className={classes.cardsContainer}>
-            {Array(5)
-              .fill(0)
-              .map((_, index) => (
-                <Card
-                  key={index}
-                  header="A starry night"
-                  description="Look up at the night sky, and find yourself immersed in the amazing mountain range of Aspen."
-                />
-              ))}
+          <div className={classes.sectionsContainer}>
+            <div className={classes.section}>
+              <div className={classes.sectionTitle}>Most Popular</div>
+              <div className={classes.box} />
+            </div>
+
+            <div className={classes.section}>
+              <div className={classes.sectionTitle}>Recommended For You</div>
+              <div className={classes.box} />
+            </div>
           </div>
         </div>
       </div>

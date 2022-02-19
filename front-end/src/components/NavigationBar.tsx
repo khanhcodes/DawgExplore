@@ -2,46 +2,79 @@ import clsx from "clsx";
 import * as React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
 import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
+import Avatar from "../media/Avatar";
+import LogoImage from "../media/Logo/logo.png";
 import { Theme } from "../theme";
 
 const styles = (theme: typeof Theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
 
     width: "100%",
     height: theme.height.navigationBar,
 
-    position: "absolute",
+    position: "sticky",
     top: 0,
     zIndex: theme.zIndex.specific.navigationBar,
 
-    backgroundColor: theme.palette.secondary
+    backgroundColor: "white"
+  },
+
+  logoContainer: {
+    ...theme.typo.set.title,
+    textDecoration: "underline",
+
+    display: "flex",
+    alignItems: "center",
+
+    height: "100%",
+
+    cursor: "pointer"
+  },
+  logo: {
+    height: "70%"
+  },
+  logoName: {
+    marginLeft: "14px"
+  },
+
+  itemsContainer: {
+    display: "flex",
+    alignItems: "center",
+
+    height: "100%"
   },
   item: {
+    ...theme.typo.set.buttonText,
+
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
 
-    color: theme.typo.color.secondary.light,
+    boxSizing: "border-box",
+    height: "100%",
     padding: "14px 16px",
-    fontSize: theme.typo.fontSize.md,
+    fontSize: theme.typo.fontSize.lg,
+
+    transition: "background-color 0.2s, color 0.2s",
 
     "&:hover": {
-      backgroundColor: "#ddd",
-      color: "black",
+      backgroundColor: theme.palette.main,
+      color: "white",
       cursor: "pointer"
     }
   },
   active: {
-    backgroundColor: theme.palette.secondaryHighlight,
-    color: "white",
+    backgroundColor: theme.palette.main,
+    color: "white"
+  },
 
-    "&:hover": {
-      backgroundColor: theme.palette.secondaryHighlight,
-      color: "white"
-    }
+  avatar: {
+    boxSizing: "border-box",
+    height: "100%",
+    padding: "6px"
   }
 });
 
@@ -54,46 +87,63 @@ class NavigationBar extends React.Component<Props> {
     return (
       <div className={classes.root}>
         <div
-          className={clsx(classes.item, {
-            [classes.active]: location.pathname === "/"
-          })}
+          className={classes.logoContainer}
           onClick={() => {
             navigate("/");
           }}
         >
-          Home
+          <img className={classes.logo} src={LogoImage} />
+
+          <div className={classes.logoName}>
+            Dawg<span style={{ color: "#c52b1f" }}>Explore</span>
+          </div>
         </div>
 
-        <div
-          className={clsx(classes.item, {
-            [classes.active]: location.pathname === "/explore"
-          })}
-        >
-          Explore
-        </div>
+        <div className={classes.itemsContainer}>
+          <div
+            className={clsx(classes.item, {
+              [classes.active]: location.pathname === "/"
+            })}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Home
+          </div>
 
-        <div
-          className={clsx(classes.item, {
-            [classes.active]: location.pathname === "/map"
-          })}
-        >
-          Map
-        </div>
+          <div
+            className={clsx(classes.item, {
+              [classes.active]: location.pathname === "/explore"
+            })}
+          >
+            Explore
+          </div>
 
-        <div
-          className={clsx(classes.item, {
-            [classes.active]: location.pathname === "/my-tickets"
-          })}
-        >
-          My Tickets
-        </div>
+          <div
+            className={clsx(classes.item, {
+              [classes.active]: location.pathname === "/map"
+            })}
+          >
+            Map
+          </div>
 
-        <div
-          className={clsx(classes.item, {
-            [classes.active]: location.pathname === "/saved-events"
-          })}
-        >
-          Saved Events
+          <div
+            className={clsx(classes.item, {
+              [classes.active]: location.pathname === "/my-tickets"
+            })}
+          >
+            My Tickets
+          </div>
+
+          <div
+            className={clsx(classes.item, {
+              [classes.active]: location.pathname === "/saved-events"
+            })}
+          >
+            Saved Events
+          </div>
+
+          <Avatar className={classes.avatar} />
         </div>
       </div>
     );
