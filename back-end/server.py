@@ -30,7 +30,7 @@ class EventModel(db.Model):
     photo = db.Column(db.String(100))
 
     def __repr__(self):
-        return f"Event(title = {title}, description = {description}, location = {location}, date = {date}, topic = {topic}, photo = {photo})"
+        return f"Event(title = {self.title}, description = {self.description}, location = {self.location}, date = {self.date}, topic = {self.topic}, photo = {self.photo})"
 
 db.create_all()
 

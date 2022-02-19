@@ -8,6 +8,8 @@ flask = "*"
 flask-cors = "*"
 python-dotenv = "*"
 colorama = "*"
+flask-restful = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 

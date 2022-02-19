@@ -1,7 +1,8 @@
 import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
-import NavigationBar from "../components/NavigationBar";
-import { Theme } from "../theme";
+import NavigationBar from "../../components/NavigationBar";
+import { Theme } from "../../theme";
+import SearchBar from "./SearchBar";
 
 const styles = (theme: typeof Theme) => ({
   root: {
@@ -33,13 +34,6 @@ const styles = (theme: typeof Theme) => ({
     height: "280px",
 
     background: theme.palette.main,
-    borderRadius: "12px"
-  },
-  searchBar: {
-    width: "80%",
-    height: "73px",
-
-    backgroundColor: "white",
     borderRadius: "12px"
   },
 
@@ -89,7 +83,7 @@ class Home extends React.Component<Props> {
 
         <div className={classes.content}>
           <div className={classes.banner}>
-            <div className={classes.searchBar} />
+            <SearchBar />
           </div>
 
           <div className={classes.sectionsContainer}>
@@ -104,7 +98,7 @@ class Home extends React.Component<Props> {
             </div>
 
             <div className={classes.section}>
-              <div className-={classes.sectionTitle}>Upcoming Events</div>
+              <div className={classes.sectionTitle}>Upcoming Events</div>
               <div className={classes.box} />
             </div>
           </div>
