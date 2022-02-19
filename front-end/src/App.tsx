@@ -25,7 +25,7 @@ export default function App() {
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home padding={10} />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
