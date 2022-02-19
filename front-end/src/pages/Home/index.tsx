@@ -44,11 +44,7 @@ const styles = (theme: typeof Theme) => ({
 
     boxSizing: "border-box",
     width: "100%",
-    padding: "40px 80px",
-
-    "& :first-child": {
-      marginTop: 0
-    }
+    padding: "40px 25px"
   },
   section: {
     display: "flex",
@@ -62,13 +58,6 @@ const styles = (theme: typeof Theme) => ({
     ...theme.typo.set.title,
 
     marginBottom: "12px"
-  },
-  box: {
-    width: "302px",
-    height: "249px",
-
-    borderRadius: "5px",
-    boxShadow: "2px 4px 9px rgba(0, 0, 0, 0.25)"
   }
 });
 
@@ -100,7 +89,6 @@ class Home extends React.Component<Props> {
 
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Upcoming Events</div>
-              <div className={classes.box} />
               <EventCard />
             </div>
           </div>
