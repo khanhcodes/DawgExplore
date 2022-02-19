@@ -102,6 +102,11 @@ class Home extends React.Component<Props> {
               <div className={classes.sectionTitle}>Recommended For You</div>
               <div className={classes.box} />
             </div>
+
+            <div className={classes.section}>
+              <div className-={classes.sectionTitle}>Upcoming Events</div>
+              <div className={classes.box} />
+            </div>
           </div>
         </div>
       </div>
