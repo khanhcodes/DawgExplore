@@ -1,21 +1,19 @@
+import moment from "moment";
 import * as React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
-import { image } from "../data";
+import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
+import Map from "../media/Map";
 import { Theme } from "../theme";
+import { Event } from "../types";
+import PlaceholderImage from "./PlaceholderImage";
 
 const styles = (theme: typeof Theme) => ({
-  cardContainer: {
-    float: "left",
-    margin: "0px",
-    width: "1200px"
-  },
-
   root: {
     display: "flex",
     flexDirection: "column",
     float: "left",
     width: "240px",
-    height: "330px",
+    height: "352px",
 
     margin: "10px 10px",
 
@@ -28,13 +26,23 @@ const styles = (theme: typeof Theme) => ({
     "&:hover": {
       boxShadow: "0 1.5rem 4rem rgba(0, 0, 0, 0.2)",
       width: "250px",
-      height: "340px"
+      height: "360px"
     }
   },
 
-  image: {
+  imageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
     width: "100%",
     height: "140px",
+
+    overflow: "hidden",
+    borderRadius: "5px"
+  },
+  image: {
+    width: "100%",
     objectFit: "cover"
   },
 
@@ -56,13 +64,22 @@ const styles = (theme: typeof Theme) => ({
     fontSize: theme.typo.fontSize.md,
     fontWeight: theme.typo.boldness.semiBold,
     marginBottom: "5px",
-    maxWidth: "85%",
+    width: "100%",
     maxHeight: "70px",
+
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  title: {
     overflow: "hidden",
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     WebkitLineClamp: 2,
     textOverflow: "ellipsis"
+  },
+  date: {
+    fontSize: theme.typo.fontSize.sm,
+    marginLeft: "4px"
   },
 
   location: {
@@ -74,6 +91,14 @@ const styles = (theme: typeof Theme) => ({
     WebkitBoxOrient: "vertical",
     WebkitLineClamp: 1,
     textOverflow: "ellipsis"
+  },
+  icon: {
+    alignSelf: "center",
+
+    width: "14px",
+    height: "14px",
+
+    marginRight: "8px"
   },
 
   description: {
@@ -89,7 +114,6 @@ const styles = (theme: typeof Theme) => ({
   exploreButton: {
     boxSizing: "border-box",
     width: "100%",
-    height: "100%",
     padding: "8px",
     textAlign: "center",
 
@@ -117,80 +141,83 @@ const styles = (theme: typeof Theme) => ({
   }
 });
 
-type Props = WithStylesProps<typeof styles>;
+type Props = WithRouterProps &
+  WithStylesProps<typeof styles> & {
+    event: Event;
+  };
 
-class EventCard extends React.Component<Props> {
+type State = {
+  stImageError: boolean;
+};
+
+class EventCard extends React.Component<Props, State> {
+  state: State = {
+    stImageError: false
+  };
+
+  parseDate = () => {
+    const { date } = this.props.event;
+    const tokens = date.split(" ");
+    const plusYear =
+      tokens[4] && tokens[4] === "2023"
+        ? tokens[4]
+        : tokens[1] === "January" || tokens[1] === "February" || tokens[1] === "March" || tokens[1] === "April"
+        ? "2022"
+        : "2021";
+    const dateOnly = tokens[0] + " " + tokens[1] + " " + tokens[2] + " " + plusYear;
+
+    const momentDate = moment(dateOnly, "dddd, MMMM DD YYYY").format("MM/DD/YY");
+    return momentDate;
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, event, navigate } = this.props;
+    const { stImageError } = this.state;
 
     return (
-      <div className={classes.cardContainer}>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
-          </div>
+      <div className={classes.root}>
+        <div className={classes.imageContainer}>
+          {event.photo !== "nan" && !stImageError && (
+            <img
+              src={event.photo}
+              className={classes.image}
+              onLoad={() => {
+                this.setState({
+                  stImageError: false
+                });
+              }}
+              onError={() => {
+                this.setState({
+                  stImageError: true
+                });
+              }}
+            />
+          )}
+          {(!(event.photo !== "nan") || stImageError) && <PlaceholderImage />}
         </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
+
+        <div className={classes.content}>
+          <div>
+            <div className={classes.header}>
+              <div className={classes.title}>{event.title}</div>
+              <div className={classes.date}>{this.parseDate()}</div>
             </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
+
+            <div className={classes.location}>
+              <Map className={classes.icon} />
+              {event.location}
             </div>
+
+            <div className={classes.description}>{event.description}</div>
           </div>
-        </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
-          </div>
-        </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
+
+          <div
+            className={classes.exploreButton}
+            onClick={() => {
+              navigate(`/event/${event.id}`);
+            }}
+          >
+            Explore <span>&rarr;</span>
           </div>
         </div>
       </div>
@@ -198,4 +225,4 @@ class EventCard extends React.Component<Props> {
   }
 }
 
-export default withStyles(styles)(EventCard);
+export default withStyles(styles)(withRouter(EventCard));
