@@ -30,7 +30,7 @@ class EventModel(db.Model):
     photo = db.Column(db.String(100))
 
     def __repr__(self):
-        return f"Event(title = {title}, description = {description}, location = {location}, date = {date}, topic = {topic}, photo = {photo})"
+        return f"Event(title = {self.title}, description = {self.description}, location = {self.location}, date = {self.date}, topic = {self.topic}, photo = {self.photo})"
 
 event_put_args = reqparse.RequestParser()
 event_put_args.add_argument("Title", type=str, help="Title of the event.")
@@ -73,7 +73,7 @@ class UserModel(db.Model):
     name = db.Column(db.String(40), nullable=False)
 
     def __repr__(self):
-        return f"User(name = {name})"
+        return f"User(name = {self.name})"
 
 user_put_args = reqparse.RequestParser()
 user_put_args.add_argument("Name", type=str, help="Name of the user.")
