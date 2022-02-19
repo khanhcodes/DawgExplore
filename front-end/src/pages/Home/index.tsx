@@ -129,13 +129,16 @@ class Home extends React.Component<Props, State> {
 
   parseDate = (date: string): string => {
     const tokens = date.split(" ");
+
     const plusYear =
       tokens[4] && tokens[4] === "2023"
-        ? tokens[4]
+        ? "2023"
         : tokens[1] === "January" || tokens[1] === "February" || tokens[1] === "March" || tokens[1] === "April"
         ? "2022"
         : "2021";
-    const dateOnly = tokens[0] + " " + tokens[1] + " " + tokens[2] + " " + plusYear;
+
+    const dateOnly = tokens[1] + " " + tokens[2] + " " + plusYear;
+
     return dateOnly;
   };
 

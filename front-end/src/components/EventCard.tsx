@@ -158,15 +158,17 @@ class EventCard extends React.Component<Props, State> {
   parseDate = () => {
     const { date } = this.props.event;
     const tokens = date.split(" ");
+
     const plusYear =
       tokens[4] && tokens[4] === "2023"
-        ? tokens[4]
+        ? "2023"
         : tokens[1] === "January" || tokens[1] === "February" || tokens[1] === "March" || tokens[1] === "April"
         ? "2022"
         : "2021";
-    const dateOnly = tokens[0] + " " + tokens[1] + " " + tokens[2] + " " + plusYear;
 
-    const momentDate = moment(dateOnly, "dddd, MMMM DD YYYY").format("MM/DD/YY");
+    const dateOnly = tokens[1] + " " + tokens[2] + " " + plusYear;
+
+    const momentDate = moment(dateOnly, "MMMM DD YYYY").format("MM/DD/YY");
     return momentDate;
   };
 
