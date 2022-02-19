@@ -115,6 +115,9 @@ class NavigationBar extends React.Component<Props> {
             className={clsx(classes.item, {
               [classes.active]: location.pathname === "/explore"
             })}
+            onClick={() => {
+              navigate("/explore");
+            }}
           >
             Explore
           </div>
@@ -123,6 +126,9 @@ class NavigationBar extends React.Component<Props> {
             className={clsx(classes.item, {
               [classes.active]: location.pathname === "/map"
             })}
+            onClick={() => {
+              navigate("/map");
+            }}
           >
             Map
           </div>
@@ -131,6 +137,9 @@ class NavigationBar extends React.Component<Props> {
             className={clsx(classes.item, {
               [classes.active]: location.pathname === "/my-tickets"
             })}
+            onClick={() => {
+              navigate("/my-tickets");
+            }}
           >
             My Tickets
           </div>
@@ -139,6 +148,9 @@ class NavigationBar extends React.Component<Props> {
             className={clsx(classes.item, {
               [classes.active]: location.pathname === "/saved-events"
             })}
+            onClick={() => {
+              navigate("/saved-events");
+            }}
           >
             Saved Events
           </div>
