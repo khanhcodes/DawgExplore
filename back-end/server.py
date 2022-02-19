@@ -32,17 +32,15 @@ class EventModel(db.Model):
     def __repr__(self):
         return f"Event(title = {title}, description = {description}, location = {location}, date = {date}, topic = {topic}, photo = {photo})"
 
-db.create_all()
-
 event_put_args = reqparse.RequestParser()
 event_put_args.add_argument("Title", type=str, help="Title of the event.")
 event_put_args.add_argument("Description", type=str, help="Description of the event.")
-event_put_args.add_argument("Location", type=str, help="Description of the event.")
-event_put_args.add_argument("Date", type=str, help="Description of the event.")
+event_put_args.add_argument("Location", type=str, help="Location of the event.")
+event_put_args.add_argument("Date", type=str, help="Date of the event.")
 event_put_args.add_argument("Topic", type=str, help="Topic of the event.")
-event_put_args.add_argument("Photo", type=str, help="Description of the event.")
+event_put_args.add_argument("Photo", type=str, help="Photo of the event.")
 
-resource_fields = {
+event_resource_fields = {
     'id': fields.Integer,
     'title': fields.String,
     'description': fields.String,
@@ -53,13 +51,13 @@ resource_fields = {
 }
 
 class Event(Resource):
-    @marshal_with(resource_fields)
+    @marshal_with(event_resource_fields)
     def get(self, event_id):
         result = EventModel.query.filter_by(id=event_id).first()
         return result
 
-    @marshal_with(resource_fields)
-    def put(self, event_id):
+    @marshal_with(event_resource_fields)
+    def post(self, event_id):
         args = event_put_args.parse_args()
         result = EventModel.query.filter_by(id=event_id).first()
         if result:
@@ -70,7 +68,41 @@ class Event(Resource):
         db.session.commit()
         return event, 201
 
+class UserModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), nullable=False)
+
+    def __repr__(self):
+        return f"User(name = {name})"
+
+user_put_args = reqparse.RequestParser()
+user_put_args.add_argument("Name", type=str, help="Name of the user.")
+
+user_resource_fields = {
+    'id': fields.Integer,
+    'name': fields.String
+}
+
+class User(Resource):
+    @marshal_with(user_resource_fields)
+    def get(self, user_id):
+        result = UserModel.query.filter_by(id=user_id).first()
+        return result
+
+    @marshal_with(user_resource_fields)
+    def post(self, user_id):
+        args = user_put_args.parse_args()
+        result = UserModel.query.filter_by(id=user_id).first()
+        if result:
+            abort(409, message="User id taken...")
+            
+        user = UserModel(id=user_id, name=args['Name'])
+        db.session.add(user)
+        db.session.commit()
+        return user, 201
+
 api.add_resource(Event, "/event/<int:event_id>")
+api.add_resource(User, "/user/<int:user_id>")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)
