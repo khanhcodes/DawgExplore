@@ -28,6 +28,18 @@ export const Theme = {
         fontWeight: 400,
         fontSize: "34px",
         lineHeight: "42px"
+      },
+      searchPrimary: {
+        fontFamily: "Roboto",
+        fontWeight: 700,
+        fontSize: "24px",
+        lineHeight: "28px"
+      },
+      searchSecondary: {
+        fontFamily: "Roboto",
+        fontWeight: 700,
+        fontSize: "19px",
+        lineHeight: "22px"
       }
     },
     boldness: {

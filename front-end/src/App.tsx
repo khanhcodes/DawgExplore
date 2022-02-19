@@ -11,7 +11,7 @@ const { REACT_APP_BACKEND } = process.env;
 export default function App() {
   React.useEffect(() => {
     axios
-      .get(`${REACT_APP_BACKEND}/person/hello`)
+      .get(`${REACT_APP_BACKEND}/event/1`)
       .then((res) => {
         const person = res.data;
         console.log(person);
