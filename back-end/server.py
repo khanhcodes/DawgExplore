@@ -68,6 +68,17 @@ class Event(Resource):
         db.session.commit()
         return event, 201
 
+class Events(Resource):
+    def get(self):
+        result = EventModel.query.all()
+
+        output = []
+        for event in result:
+            event_data = {'id': event.id, 'title': event.title, 'description': event.description, 'location': event.location, 'date': event.date, 'topic': event.topic, 'photo': event.photo}
+            output.append(event_data)
+
+        return {"events": output}
+
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
@@ -101,8 +112,21 @@ class User(Resource):
         db.session.commit()
         return user, 201
 
+class Users(Resource):
+    def get(self):
+        result = UserModel.query.all()
+
+        output = []
+        for user in result:
+            user_data = {'id': user.id, 'name': user.name}
+            output.append(user_data)
+
+        return {"users": output}
+
 api.add_resource(Event, "/event/<int:event_id>")
+api.add_resource(Event, "/events")
 api.add_resource(User, "/user/<int:user_id>")
+api.add_resource(Users, "/users")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)
