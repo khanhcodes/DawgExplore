@@ -1,5 +1,6 @@
 import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
+import EventCard from "../../components/EventCard";
 import NavigationBar from "../../components/NavigationBar";
 import { Theme } from "../../theme";
 import SearchBar from "./SearchBar";
@@ -89,17 +90,18 @@ class Home extends React.Component<Props> {
           <div className={classes.sectionsContainer}>
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Most Popular</div>
-              <div className={classes.box} />
+              <EventCard />
             </div>
 
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Recommended For You</div>
-              <div className={classes.box} />
+              <EventCard />
             </div>
 
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Upcoming Events</div>
               <div className={classes.box} />
+              <EventCard />
             </div>
           </div>
         </div>
