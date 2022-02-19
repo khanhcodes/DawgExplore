@@ -12,8 +12,7 @@ export const Theme = {
   },
   palette: {
     main: "#E73C3C",
-    secondary: "#a82929",
-    secondaryHighlight: "#e97a7a"
+    secondary: "#c45349"
   },
   typo: {
     set: {
@@ -40,6 +39,26 @@ export const Theme = {
         fontWeight: 700,
         fontSize: "19px",
         lineHeight: "22px"
+      },
+
+      xl_bold: {
+        fontFamily: "'Dosis', sans-serif",
+        fontWeight: 700,
+        fontSize: "40px",
+        lineHeight: "60px"
+      },
+      bold: {
+        fontFamily: "'Dosis', sans-serif",
+        fontWeight: 600,
+        fontSize: "24px",
+        lineHeight: "60px"
+      },
+
+      default: {
+        fontFamily: "'Dosis', sans-serif",
+        fontWeight: 400,
+        fontSize: "24px",
+        lineHeight: "42px"
       }
     },
     boldness: {
