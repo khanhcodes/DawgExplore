@@ -112,9 +112,21 @@ class User(Resource):
         db.session.commit()
         return user, 201
 
+class Users(Resource):
+    def get(self):
+        result = UserModel.query.all()
+
+        output = []
+        for user in result:
+            user_data = {'id': user.id, 'name': user.name}
+            output.append(user_data)
+
+        return {"users": output}
+
 api.add_resource(Event, "/event/<int:event_id>")
 api.add_resource(Event, "/events")
 api.add_resource(User, "/user/<int:user_id>")
+api.add_resource(Users, "/users")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)
