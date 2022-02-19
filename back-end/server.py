@@ -68,6 +68,32 @@ class Event(Resource):
         db.session.commit()
         return event, 201
 
+    @marshal_with(event_resource_fields)
+    def patch(self, event_id):
+        args = event_put_args.parse_args()
+        result = EventModel.query.filter_by(id=event_id).first()
+        if not result:
+            abort(404, message="Event doesn't exist, can't update.")
+
+        if args['Title']:
+            result.title = args['Title'] 
+        if args['Description']:
+            result.description = args['Description']
+        if args['Location']:
+            result.location = args['Location']
+        if args['Date']:
+            result.date = args['Date']
+        if args['Topic']:
+            result.topic = args['Topic']
+        if args['Photo']:
+            result.photo = args['Photo']
+
+        db.session.add(result)
+        db.session.commit()
+
+        return result
+
+
 class Events(Resource):
     def get(self):
         result = EventModel.query.all()
@@ -124,7 +150,7 @@ class Users(Resource):
         return {"users": output}
 
 api.add_resource(Event, "/event/<int:event_id>")
-api.add_resource(Event, "/events")
+api.add_resource(Events, "/events")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(Users, "/users")
 
