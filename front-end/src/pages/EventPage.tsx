@@ -1,10 +1,12 @@
 import axios from "axios";
+import clsx from "clsx";
 import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
 import { matchPath } from "react-router";
 import NavigationBar from "../components/NavigationBar";
 import PlaceholderImage from "../components/PlaceholderImage";
 import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
+import { withSavedEvents, WithSavedEventsProps } from "../HOC/save-events";
 import Bookmark from "../media/Bookmark";
 import Clock from "../media/Clock";
 import EventIcon from "../media/EventIcon";
@@ -83,7 +85,14 @@ const styles = (theme: typeof Theme) => ({
   },
   bookmark: {
     height: "53px",
-    width: BOOKMARK_WIDTH
+    width: BOOKMARK_WIDTH,
+
+    cursor: "pointer"
+  },
+  bookmark_active: {
+    "& path": {
+      fill: theme.palette.main + " !important"
+    }
   },
   link: {
     color: "black"
@@ -108,7 +117,7 @@ const styles = (theme: typeof Theme) => ({
   }
 });
 
-type Props = WithRouterProps & WithStylesProps<typeof styles>;
+type Props = WithRouterProps & WithSavedEventsProps & WithStylesProps<typeof styles>;
 
 type State = {
   stEvent: Event | undefined;
@@ -145,6 +154,38 @@ class EventPage extends React.Component<Props, State> {
       });
   }
 
+  onBookmark = () => {
+    const { savedEventsContext } = this.props;
+    const { savedEvents, setSavedEvents } = savedEventsContext;
+
+    const ids = savedEvents.map((event) => event.id);
+
+    if (!this.state.stEvent) {
+      return;
+    }
+
+    if (ids.includes(this.state.stEvent.id)) {
+      savedEvents.splice(ids.indexOf(this.state.stEvent.id), 1);
+      setSavedEvents(savedEvents);
+    } else {
+      savedEvents.push(this.state.stEvent);
+      setSavedEvents(savedEvents);
+    }
+  };
+
+  checkBookmarkActive = (): boolean => {
+    const { savedEventsContext } = this.props;
+    const { savedEvents } = savedEventsContext;
+
+    const ids = savedEvents.map((event) => event.id);
+
+    if (!this.state.stEvent) {
+      return false;
+    }
+
+    return ids.includes(this.state.stEvent.id);
+  };
+
   render() {
     const { classes } = this.props;
     const { stEvent, stImageError } = this.state;
@@ -177,7 +218,12 @@ class EventPage extends React.Component<Props, State> {
           <div className={classes.eventContent}>
             <div className={classes.header}>
               <div className={classes.title}>{stEvent?.title}</div>
-              <Bookmark className={classes.bookmark} />
+              <Bookmark
+                className={clsx(classes.bookmark, {
+                  [classes.bookmark_active]: this.checkBookmarkActive()
+                })}
+                onClick={this.onBookmark}
+              />
             </div>
 
             <div className={classes.displayBasicInfo}>
@@ -213,4 +259,4 @@ class EventPage extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(withRouter(EventPage));
+export default withStyles(styles)(withRouter(withSavedEvents(EventPage)));
