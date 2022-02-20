@@ -265,7 +265,12 @@ class Home extends React.Component<Props, State> {
                   ))}
                 </div>
 
-                <ForwardButton className={classes.forwardButton} />
+                <ForwardButton
+                  className={classes.forwardButton}
+                  onClick={() => {
+                    navigate(`/upcoming`);
+                  }}
+                />
               </div>
             </div>
           )}
