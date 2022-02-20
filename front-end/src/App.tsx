@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import MostPopular from "./pages/MostPopular";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import Recommended from "./pages/Recommended";
+import SavedEventsPage from "./pages/SavedEventsPage";
 import Upcoming from "./pages/Upcoming";
 import { Theme } from "./theme";
 
@@ -19,6 +20,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/event/:id" element={<EventPage />} />
+            <Route path="/saved-events" element={<SavedEventsPage />} />
             <Route path="/upcoming" element={<Upcoming />} />
             <Route path="/most-popular" element={<MostPopular />} />
             <Route path="/recommended" element={<Recommended />} />

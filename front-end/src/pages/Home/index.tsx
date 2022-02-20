@@ -127,12 +127,14 @@ class Home extends React.Component<Props, State> {
           return;
         }
 
-        const randomEvents = getRandom(events, 4);
+        const events_without_exam = events.filter((event) => !event.title.toLowerCase().includes("exam"));
+
+        const randomEvents = getRandom(events_without_exam, 4);
         this.setState({
           stMostPopular: randomEvents
         });
 
-        const sortedEvents = events.sort((a, b) => {
+        const sortedEvents = events_without_exam.sort((a, b) => {
           const dateA = new Date(this.parseDate(a.date));
           const dateB = new Date(this.parseDate(b.date));
           if (dateA < dateB) {
