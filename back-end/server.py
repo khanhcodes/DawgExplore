@@ -1,5 +1,7 @@
 import os
+from gettext import bind_textdomain_codeset
 
+import requests as req
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api, Resource, abort, fields, marshal_with, reqparse
@@ -105,6 +107,34 @@ class Events(Resource):
 
         return {"events": output}
 
+class SearchEventsExclusive(Resource):
+    def get(self, query_id):
+        result = EventModel.query.all()
+
+        q_ids = query_id.split('_')
+        output = []
+        for event in result:
+            if all(str.lower(q_id) in str.lower(event.title) or str.lower(q_id) in str.lower(event.description) for q_id in q_ids):
+                event_data = {'id': event.id, 'title': event.title, 'description': event.description, 'location': event.location, 'date': event.date, 'topic': event.topic, 'photo': event.photo}
+                output.append(event_data)
+                    
+
+        return {"events": output}
+
+class SearchEventsInclusive(Resource):
+    def get(self, query_id):
+        result = EventModel.query.all()
+
+        q_ids = query_id.split('_')
+        output = []
+        for event in result:
+            if any(str.lower(q_id) in str.lower(event.title) or str.lower(q_id) in str.lower(event.description) for q_id in q_ids):
+                event_data = {'id': event.id, 'title': event.title, 'description': event.description, 'location': event.location, 'date': event.date, 'topic': event.topic, 'photo': event.photo}
+                output.append(event_data)
+                    
+
+        return {"events": output}
+
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
@@ -151,6 +181,8 @@ class Users(Resource):
 
 api.add_resource(Event, "/event/<int:event_id>")
 api.add_resource(Events, "/events")
+api.add_resource(SearchEventsExclusive, "/searchevents/exclusive/<string:query_id>")
+api.add_resource(SearchEventsInclusive, "/searchevents/inclusive/<string:query_id>")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(Users, "/users")
 
