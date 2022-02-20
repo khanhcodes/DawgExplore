@@ -19,10 +19,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/event/:id" element={<EventPage />} />
-            <Route path="*" element={<PlaceholderPage />} />
             <Route path="/upcoming" element={<Upcoming />} />
             <Route path="/most-popular" element={<MostPopular />} />
             <Route path="/recommended" element={<Recommended />} />
+
+            <Route path="*" element={<PlaceholderPage />} />
           </Routes>
         </BrowserRouter>
       </SavedEventsProvider>
