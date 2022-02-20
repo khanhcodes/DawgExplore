@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { SavedEventsProvider } from "./HOC/save-events";
 import EventPage from "./pages/EventPage";
+import Explore from "./pages/Explore";
 import Home from "./pages/Home";
 import MostPopular from "./pages/MostPopular";
 import PlaceholderPage from "./pages/PlaceholderPage";
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/upcoming" element={<Upcoming />} />
             <Route path="/most-popular" element={<MostPopular />} />
             <Route path="/recommended" element={<Recommended />} />
+            <Route path="/explore" element={<Explore />} />
 
             <Route path="*" element={<PlaceholderPage />} />
           </Routes>

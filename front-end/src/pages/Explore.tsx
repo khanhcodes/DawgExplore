@@ -1,195 +1,130 @@
-import * as React from "react";
+import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
-import { image } from "../data";
+import CategoryCard from "../components/CategoryCard";
+import NavigationBar from "../components/NavigationBar";
+import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
+import Background from "../media/Background";
+import DogBackward from "../media/DogBackward/dog-backward.png";
+import DogForward from "../media/DogForward/dog-forward.png";
 import { Theme } from "../theme";
 
 const styles = (theme: typeof Theme) => ({
-  cardContainer: {
-    float: "left",
-    margin: "0px",
-    width: "1200px"
-  },
-
   root: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "column",
-    float: "left",
-    width: "240px",
-    height: "330px",
 
-    margin: "10px 10px",
-
-    borderRadius: "12px",
-    overflow: "hidden",
-
-    boxShadow: "2px 4px 9px rgba(0, 0, 0, 0.25)",
-    transition: "box-shadow 0.2s, width 0.2s, height 0.2s",
-
-    "&:hover": {
-      boxShadow: "0 1.5rem 4rem rgba(0, 0, 0, 0.2)",
-      width: "250px",
-      height: "340px"
-    }
-  },
-
-  image: {
+    position: "relative",
     width: "100%",
-    height: "140px",
-    objectFit: "cover"
+    "@media (min-width: 1080px)": {
+      width: "1080px"
+    }
   },
 
   content: {
     display: "flex",
-    textAlign: "left",
-    justifyContent: "space-between",
     flexDirection: "column",
 
     boxSizing: "border-box",
-    width: "100%",
-    height: "100",
-    padding: "15px",
-
-    flexGrow: 1
+    width: "100%"
   },
 
-  header: {
-    fontSize: theme.typo.fontSize.md,
-    fontWeight: theme.typo.boldness.semiBold,
-    marginBottom: "5px",
-    maxWidth: "85%",
-    maxHeight: "70px",
+  banner: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    position: "relative",
     overflow: "hidden",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 2,
-    textOverflow: "ellipsis"
+
+    height: "280px",
+
+    borderRadius: "12px"
+  },
+  backgroundBanner: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: -1,
+
+    height: "100%"
+  },
+  dogForward: {
+    position: "absolute",
+    left: 14,
+
+    height: "80px"
+  },
+  dogBackward: {
+    position: "absolute",
+    right: 14,
+
+    height: "80px"
   },
 
-  location: {
-    fontSize: theme.typo.fontSize.sm,
-    color: theme.typo.color.secondary.dark,
-    marginBottom: "5px",
-    overflow: "hidden",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 1,
-    textOverflow: "ellipsis"
+  searchResultContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+
+    marginTop: "80px",
+    marginBottom: "40px"
   },
 
-  description: {
-    fontSize: theme.typo.fontSize.sm,
-    color: theme.typo.color.secondary.dark,
-    marginBottom: "10px",
-    overflow: "hidden",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 3,
-    textOverflow: "ellipsis"
-  },
-  exploreButton: {
+  sectionsContainer: {
+    display: "flex",
+    flexDirection: "column",
+
     boxSizing: "border-box",
+    width: "100%"
+  },
+  section: {
+    display: "flex",
+    flexDirection: "column",
+    position: "relative",
+
     width: "100%",
-    height: "100%",
-    padding: "8px",
-    textAlign: "center",
 
-    fontSize: theme.typo.fontSize.md,
-    color: theme.palette.main,
-    backgroundColor: "#FFE6E6",
+    marginTop: "40px"
+  },
+  sectionTitle: {
+    ...theme.typo.set.title,
 
-    borderRadius: "0.4rem",
-
-    transition: "background-color 0.2s",
-    cursor: "pointer",
-
-    "&:hover": {
-      backgroundColor: "#FFE6E6"
-    },
-
-    "& span": {
-      marginLeft: "1rem",
-      transition: "margin-left 0.2s"
-    },
-
-    "&:hover span": {
-      marginLeft: "1.5rem"
-    }
+    marginBottom: "12px"
+  },
+  image: {
+    width: "100%",
+    objectFit: "cover"
+  },
+  eventCardsContainer: {
+    display: "flex"
+  },
+  forwardButton: {
+    position: "absolute",
+    right: -30,
+    top: "50%",
+    cursor: "pointer"
   }
 });
+type Props = WithRouterProps & WithStylesProps<typeof styles>;
 
-type Props = WithStylesProps<typeof styles>;
-
-class EventCard extends React.Component<Props> {
+class Explore extends React.Component<Props> {
   render() {
     const { classes } = this.props;
-
     return (
-      <div className={classes.cardContainer}>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
+      <div className={classes.root}>
+        <NavigationBar />
+
+        <div className={classes.content}>
+          <div className={classes.banner}>
+            <img src={DogForward} className={classes.dogForward} />
+            <Background className={classes.backgroundBanner} />
+            <img src={DogBackward} className={classes.dogBackward} />
           </div>
-        </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
-          </div>
-        </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
-            </div>
-          </div>
-        </div>
-        <div className={classes.root}>
-          <img src={image} className={classes.image} />
-          <div className={classes.content}>
-            <div>
-              <div className={classes.header}>Football Celebration</div>
-              <div className={classes.location}>Sanford Stadium, UGA</div>
-              <div className={classes.description}>
-                The first step on the path toward becoming a yoga teacher or simply deepening the practice, Level One
-                provides the tools to create inspiring vinyasa yoga classes grounded in proper alignment and the safety
-                of exercise science.
-              </div>
-            </div>
-            <div className={classes.exploreButton}>
-              Explore <span>&rarr;</span>
+          <div className={classes.sectionsContainer}>
+            <div className={classes.section}>
+              <div className={classes.sectionTitle}>Explore</div>
+              <CategoryCard />
             </div>
           </div>
         </div>
@@ -198,4 +133,4 @@ class EventCard extends React.Component<Props> {
   }
 }
 
-export default withStyles(styles)(EventCard);
+export default withStyles(styles)(withRouter(Explore));
