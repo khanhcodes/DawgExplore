@@ -20,9 +20,8 @@ const styles = (theme: typeof Theme) => ({
   searchBar: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
 
-    width: "80%",
+    width: "90%",
     height: SEARCH_BAR_HEIGHT,
 
     backgroundColor: "white",
@@ -90,7 +89,7 @@ const styles = (theme: typeof Theme) => ({
 
   searchButton: {
     ...theme.typo.set.searchPrimary,
-    color: "white",
+    color: "#797272",
 
     display: "flex",
     justifyContent: "center",
@@ -100,7 +99,7 @@ const styles = (theme: typeof Theme) => ({
     height: SEARCH_BUTTON_HEIGHT,
     padding: "10px 26px",
 
-    backgroundColor: theme.palette.main,
+    backgroundColor: "#C4C4C4",
     borderRadius: "24px",
     cursor: "pointer"
   }
@@ -137,7 +136,7 @@ class Home extends React.Component<Props> {
 
         <div className={classes.searchBar_otherTile}>
           <EventIcon className={classes.searchBar_icon} />
-          <div className={classes.searchBar_text}>Type</div>
+          <div className={classes.searchBar_text}>Type of Events</div>
         </div>
 
         <div className={classes.divider} />

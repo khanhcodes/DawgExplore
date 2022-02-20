@@ -75,8 +75,7 @@ const styles = (theme: typeof Theme) => ({
     flexDirection: "column",
 
     boxSizing: "border-box",
-    width: "100%",
-    padding: "40px 25px"
+    width: "100%"
   },
   section: {
     display: "flex",
