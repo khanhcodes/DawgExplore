@@ -70,6 +70,13 @@ const styles = (theme: typeof Theme) => ({
     height: "80px"
   },
 
+  searchResultContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+
+    marginTop: "80px"
+  },
+
   sectionsContainer: {
     display: "flex",
     flexDirection: "column",
@@ -109,12 +116,18 @@ type Props = WithRouterProps & WithStylesProps<typeof styles>;
 type State = {
   stMostPopular: Event[];
   stUpcomingEvents: Event[];
+
+  stCurrentQuery: string;
+  stSearchResult: Event[];
 };
 
 class Home extends React.Component<Props, State> {
   state: State = {
     stMostPopular: [],
-    stUpcomingEvents: []
+    stUpcomingEvents: [],
+
+    stCurrentQuery: "",
+    stSearchResult: []
   };
 
   componentDidMount() {
@@ -170,9 +183,37 @@ class Home extends React.Component<Props, State> {
     return dateOnly;
   };
 
+  search = (query: string) => {
+    if (query === "") {
+      this.setState({
+        stCurrentQuery: "",
+        stSearchResult: []
+      });
+      return;
+    }
+
+    axios
+      .get(`${REACT_APP_BACKEND}/searchevents/inclusive/${query}`)
+      .then((res) => {
+        const events: Event[] | undefined = res.data.events;
+
+        if (!events) {
+          return;
+        }
+
+        const events_without_exam = events.filter((event) => !event.title.toLowerCase().includes("exam"));
+
+        this.setState({
+          stCurrentQuery: query,
+          stSearchResult: events_without_exam
+        });
+      })
+      .catch((err) => console.error(err));
+  };
+
   render() {
     const { classes, navigate } = this.props;
-    const { stMostPopular, stUpcomingEvents } = this.state;
+    const { stMostPopular, stUpcomingEvents, stCurrentQuery, stSearchResult } = this.state;
 
     return (
       <div className={classes.root}>
@@ -182,56 +223,52 @@ class Home extends React.Component<Props, State> {
           <div className={classes.banner}>
             <img src={DogForward} className={classes.dogForward} />
             <Background className={classes.backgroundBanner} />
-            <SearchBar />
+            <SearchBar onSearch={this.search} />
             <img src={DogBackward} className={classes.dogBackward} />
           </div>
 
-          <div className={classes.sectionsContainer}>
-            <div className={classes.section}>
-              <div className={classes.sectionTitle}>Most Popular</div>
+          {stCurrentQuery !== "" && (
+            <div className={classes.searchResultContainer}>
+              {stSearchResult.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          )}
 
-              {stMostPopular.length !== 0 && (
+          {stCurrentQuery === "" && (
+            <div className={classes.sectionsContainer}>
+              <div className={classes.section}>
+                <div className={classes.sectionTitle}>Most Popular</div>
+
+                {stMostPopular.length !== 0 && (
+                  <div className={classes.eventCardsContainer}>
+                    {stMostPopular.map((event) => (
+                      <EventCard key={event.id} event={event} />
+                    ))}
+                  </div>
+                )}
+
+                <ForwardButton
+                  className={classes.forwardButton}
+                  onClick={() => {
+                    navigate(`/most-popular`);
+                  }}
+                />
+              </div>
+
+              <div className={classes.section}>
+                <div className={classes.sectionTitle}>Upcoming Events</div>
+
                 <div className={classes.eventCardsContainer}>
-                  {stMostPopular.map((event) => (
+                  {stUpcomingEvents.map((event) => (
                     <EventCard key={event.id} event={event} />
                   ))}
                 </div>
-              )}
 
-              <ForwardButton
-                className={classes.forwardButton}
-                onClick={() => {
-                  navigate(`/most-popular`);
-                }}
-              />
-            </div>
-
-            {/* <div className={classes.section}>
-              <div className={classes.sectionTitle}>Recommended For You</div>
-
-              <div className={classes.eventCardsContainer}>
-                {Array(4)
-                  .fill(0)
-                  .map((_, index) => (
-                    <EventCard key={index} event={event} />
-                  ))}
+                <ForwardButton className={classes.forwardButton} />
               </div>
-
-              <ForwardButton className={classes.forwardButton} />
-            </div> */}
-
-            <div className={classes.section}>
-              <div className={classes.sectionTitle}>Upcoming Events</div>
-
-              <div className={classes.eventCardsContainer}>
-                {stUpcomingEvents.map((event) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
-              </div>
-
-              <ForwardButton className={classes.forwardButton} />
             </div>
-          </div>
+          )}
         </div>
       </div>
     );
