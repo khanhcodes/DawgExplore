@@ -1,7 +1,10 @@
+import clsx from "clsx";
 import moment from "moment";
 import * as React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
 import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
+import { withSavedEvents, WithSavedEventsProps } from "../HOC/save-events";
+import Bookmark from "../media/Bookmark";
 import Map from "../media/Map";
 import { Theme } from "../theme";
 import { Event } from "../types";
@@ -15,6 +18,8 @@ const styles = (theme: typeof Theme) => ({
     width: "240px",
     height: "352px",
 
+    position: "relative",
+
     margin: "10px 10px",
 
     borderRadius: "12px",
@@ -27,6 +32,21 @@ const styles = (theme: typeof Theme) => ({
       boxShadow: "0 1.5rem 4rem rgba(0, 0, 0, 0.2)",
       width: "250px",
       height: "360px"
+    }
+  },
+
+  bookmark: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    height: "30px",
+    width: "24px",
+
+    cursor: "pointer"
+  },
+  bookmark_active: {
+    "& path": {
+      fill: theme.palette.main + " !important"
     }
   },
 
@@ -141,7 +161,8 @@ const styles = (theme: typeof Theme) => ({
   }
 });
 
-type Props = WithRouterProps &
+type Props = WithSavedEventsProps &
+  WithRouterProps &
   WithStylesProps<typeof styles> & {
     event: Event;
   };
@@ -172,12 +193,43 @@ class EventCard extends React.Component<Props, State> {
     return momentDate;
   };
 
+  onBookmark = () => {
+    const { savedEventsContext, event: currentEvent } = this.props;
+    const { savedEvents, setSavedEvents } = savedEventsContext;
+
+    const ids = savedEvents.map((event) => event.id);
+
+    if (ids.includes(currentEvent.id)) {
+      savedEvents.splice(ids.indexOf(currentEvent.id), 1);
+      setSavedEvents(savedEvents);
+    } else {
+      savedEvents.push(currentEvent);
+      setSavedEvents(savedEvents);
+    }
+  };
+
+  checkBookmarkActive = (): boolean => {
+    const { savedEventsContext, event: currentEvent } = this.props;
+    const { savedEvents } = savedEventsContext;
+
+    const ids = savedEvents.map((event) => event.id);
+
+    return ids.includes(currentEvent.id);
+  };
+
   render() {
     const { classes, event, navigate } = this.props;
     const { stImageError } = this.state;
 
     return (
       <div className={classes.root}>
+        <Bookmark
+          className={clsx(classes.bookmark, {
+            [classes.bookmark_active]: this.checkBookmarkActive()
+          })}
+          onClick={this.onBookmark}
+        />
+
         <div className={classes.imageContainer}>
           {event.photo !== "nan" && !stImageError && (
             <img
@@ -227,4 +279,4 @@ class EventCard extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(withRouter(EventCard));
+export default withStyles(styles)(withRouter(withSavedEvents(EventCard)));
