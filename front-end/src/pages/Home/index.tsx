@@ -4,6 +4,9 @@ import withStyles, { WithStylesProps } from "react-jss";
 import EventCard from "../../components/EventCard";
 import NavigationBar from "../../components/NavigationBar";
 import { withRouter, WithRouterProps } from "../../HOC/react-router-dom";
+import Background from "../../media/Background";
+import DogBackward from "../../media/DogBackward/dog-backward.png";
+import DogForward from "../../media/DogForward/dog-forward.png";
 import ForwardButton from "../../media/ForwardButton";
 import { Theme } from "../../theme";
 import { Event } from "../../types";
@@ -39,10 +42,32 @@ const styles = (theme: typeof Theme) => ({
     justifyContent: "center",
     alignItems: "center",
 
+    position: "relative",
+    overflow: "hidden",
+
     height: "280px",
 
-    background: theme.palette.main,
     borderRadius: "12px"
+  },
+  backgroundBanner: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: -1,
+
+    height: "100%"
+  },
+  dogForward: {
+    position: "absolute",
+    left: 14,
+
+    height: "80px"
+  },
+  dogBackward: {
+    position: "absolute",
+    right: 14,
+
+    height: "80px"
   },
 
   sectionsContainer: {
@@ -153,7 +178,10 @@ class Home extends React.Component<Props, State> {
 
         <div className={classes.content}>
           <div className={classes.banner}>
+            <img src={DogForward} className={classes.dogForward} />
+            <Background className={classes.backgroundBanner} />
             <SearchBar />
+            <img src={DogBackward} className={classes.dogBackward} />
           </div>
 
           <div className={classes.sectionsContainer}>
