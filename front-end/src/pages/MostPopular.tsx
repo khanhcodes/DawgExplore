@@ -93,7 +93,6 @@ class MostPopular extends React.Component<Props> {
           <div className={classes.sectionsContainer}>
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Most Popular</div>
-              <h1>Most Popular</h1>
             </div>
           </div>
         </div>
