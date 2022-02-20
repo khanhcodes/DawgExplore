@@ -74,7 +74,8 @@ const styles = (theme: typeof Theme) => ({
     display: "flex",
     flexWrap: "wrap",
 
-    marginTop: "80px"
+    marginTop: "80px",
+    marginBottom: "40px"
   },
 
   sectionsContainer: {
