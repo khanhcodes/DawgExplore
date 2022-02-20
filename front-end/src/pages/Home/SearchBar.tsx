@@ -106,17 +106,41 @@ const styles = (theme: typeof Theme) => ({
   }
 });
 
-type Props = WithStylesProps<typeof styles>;
+type Props = WithStylesProps<typeof styles> & {
+  onSearch: (query: string) => void;
+};
 
-class Home extends React.Component<Props> {
+type State = {
+  stQuery: string;
+};
+
+class SearchBar extends React.Component<Props, State> {
+  state: State = {
+    stQuery: ""
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, onSearch } = this.props;
+    const { stQuery } = this.state;
 
     return (
       <div className={classes.searchBar}>
         <div className={classes.searchBar_explore}>
           <MagnifyGlass className={classes.searchBar_icon} />
-          <input className={classes.searchBar_input} placeholder="Explore" />
+          <input
+            onChange={(event) => {
+              this.setState({
+                stQuery: event.target.value
+              });
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                onSearch(stQuery);
+              }
+            }}
+            className={classes.searchBar_input}
+            placeholder="Explore"
+          />
         </div>
 
         <div className={classes.divider} />
@@ -143,11 +167,18 @@ class Home extends React.Component<Props> {
         <div className={classes.divider} />
 
         <div className={classes.searchBar_search}>
-          <div className={classes.searchButton}>Search</div>
+          <div
+            className={classes.searchButton}
+            onClick={() => {
+              onSearch(stQuery);
+            }}
+          >
+            Search
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(SearchBar);
