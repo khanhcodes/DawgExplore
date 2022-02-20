@@ -1,12 +1,16 @@
+import axios from "axios";
 import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
+import EventCard from "../components/EventCard";
 import NavigationBar from "../components/NavigationBar";
 import { dogPhoto } from "../data";
 import { withRouter, WithRouterProps } from "../HOC/react-router-dom";
 import { Theme } from "../theme";
+import { Event } from "../types";
 
 const IMAGE_HEIGHT = "320px";
 const ICON_SIZE = "32px";
+const { REACT_APP_BACKEND } = process.env;
 
 const styles = (theme: typeof Theme) => ({
   root: {
@@ -64,8 +68,7 @@ const styles = (theme: typeof Theme) => ({
     flexDirection: "column",
 
     boxSizing: "border-box",
-    width: "100%",
-    padding: "40px 25px"
+    width: "100%"
   },
   section: {
     display: "flex",
@@ -74,14 +77,42 @@ const styles = (theme: typeof Theme) => ({
     width: "100%",
 
     marginTop: "40px"
+  },
+
+  eventCardsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: "100%"
   }
 });
 
 type Props = WithRouterProps & WithStylesProps<typeof styles>;
 
-class MostPopular extends React.Component<Props> {
+type State = {
+  stEvents: Event[];
+};
+
+class MostPopular extends React.Component<Props, State> {
+  state: State = {
+    stEvents: []
+  };
+
+  componentDidMount() {
+    axios
+      .get(`${REACT_APP_BACKEND}/events`)
+      .then((res) => {
+        const events: Event[] | undefined = res.data.events;
+        if (!events) {
+          return;
+        }
+        this.setState({ stEvents: events });
+      })
+      .catch((err) => console.error(err));
+  }
   render() {
     const { classes } = this.props;
+
+    const { stEvents } = this.state;
 
     return (
       <div className={classes.root}>
@@ -93,7 +124,14 @@ class MostPopular extends React.Component<Props> {
           <div className={classes.sectionsContainer}>
             <div className={classes.section}>
               <div className={classes.sectionTitle}>Most Popular</div>
-              <h1>Most Popular</h1>
+
+              {stEvents.length !== 0 && (
+                <div className={classes.eventCardsContainer}>
+                  {stEvents.map((event) => (
+                    <EventCard key={event.id} event={event} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
