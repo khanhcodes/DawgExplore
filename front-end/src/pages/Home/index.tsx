@@ -3,6 +3,7 @@ import React from "react";
 import withStyles, { WithStylesProps } from "react-jss";
 import EventCard from "../../components/EventCard";
 import NavigationBar from "../../components/NavigationBar";
+import { withRouter, WithRouterProps } from "../../HOC/react-router-dom";
 import Background from "../../media/Background";
 import DogBackward from "../../media/DogBackward/dog-backward.png";
 import DogForward from "../../media/DogForward/dog-forward.png";
@@ -103,7 +104,7 @@ const styles = (theme: typeof Theme) => ({
   }
 });
 
-type Props = WithStylesProps<typeof styles>;
+type Props = WithRouterProps & WithStylesProps<typeof styles>;
 
 type State = {
   stMostPopular: Event[];
@@ -126,14 +127,12 @@ class Home extends React.Component<Props, State> {
           return;
         }
 
-        const events_without_exam = events.filter((event) => !event.title.toLowerCase().includes("exam"));
-
-        const randomEvents = getRandom(events_without_exam, 4);
+        const randomEvents = getRandom(events, 4);
         this.setState({
           stMostPopular: randomEvents
         });
 
-        const sortedEvents = events_without_exam.sort((a, b) => {
+        const sortedEvents = events.sort((a, b) => {
           const dateA = new Date(this.parseDate(a.date));
           const dateB = new Date(this.parseDate(b.date));
           if (dateA < dateB) {
@@ -170,7 +169,7 @@ class Home extends React.Component<Props, State> {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, navigate } = this.props;
     const { stMostPopular, stUpcomingEvents } = this.state;
 
     return (
@@ -197,7 +196,12 @@ class Home extends React.Component<Props, State> {
                 </div>
               )}
 
-              <ForwardButton className={classes.forwardButton} />
+              <ForwardButton
+                className={classes.forwardButton}
+                onClick={() => {
+                  navigate(`/most-popular`);
+                }}
+              />
             </div>
 
             {/* <div className={classes.section}>
@@ -232,4 +236,4 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(withRouter(Home));
