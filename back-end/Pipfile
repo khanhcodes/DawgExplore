@@ -11,6 +11,7 @@ colorama = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
 requests = "*"
+gunicorn = "*"
 
 [dev-packages]
 
