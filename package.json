@@ -5,6 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "setup": "cd front-end && yarn install && cd ../back-end && yarn install && yarn setup && yarn pi && cd .."
+    "setup": "cd front-end && yarn install && cd ../back-end && yarn install && yarn setup && yarn pi && cd ..",
+    "deploy": "yarn deploy:back-end && yarn deploy:front-end",
+    "deploy:front-end": "$(cat .env) && git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_FRONTEND_NAME.git `git subtree split --prefix front-end main`:main --force",
+    "deploy:back-end": "$(cat .env) && git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_BACKEND_NAME.git `git subtree split --prefix back-end main`:main --force"
   }
 }
