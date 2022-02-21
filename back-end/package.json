@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "pipenv run python server.py",
     "dev": "pipenv run python server.py",
     "setup": "run-script-os",
     "setup:macos": "pip install --user pipx && python3 -m pipx ensurepath && pipx install pipenv",
